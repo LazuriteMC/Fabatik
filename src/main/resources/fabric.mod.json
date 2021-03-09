@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "fabatik",
+  "version": "${version}",
+  "name": "Fabatik",
+  "description": "A dynamic texture resolution mod and API.",
+  "authors": [
+    "The Lazurite Team"
+  ],
+  "contact": {
+    "homepage": "https://lazurite.dev",
+    "sources": "https://github.com/LazuriteMC/Fabatik",
+    "issues": "https://github.com/LazuriteMC/Fabatik/issues"
+  },
+  "license": "MIT",
+  "icon": "assets/fabatik/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "lazurite.fabatik.FabatikClient"
+    ]
+  },
+  "mixins": [
+    "fabatik.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": "*",
+    "fabric": "*",
+    "minecraft": "1.16.x"
+  }
+}
