@@ -6,8 +6,10 @@ import net.fabricmc.api.Environment;
 
 @Environment(EnvType.CLIENT)
 public class FabatikClient implements ClientModInitializer {
+
     @Override
     public void onInitializeClient() {
         
     }
+
 }
