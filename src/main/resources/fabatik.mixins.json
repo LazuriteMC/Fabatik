@@ -4,9 +4,9 @@
   "package": "lazurite.fabatik.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "NativeImageMixin"
   ],
   "client": [
-    "TextureManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
