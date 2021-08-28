@@ -1,4 +1,4 @@
-package lazurite.fabatik;
+package dev.lazurite.fabatik;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;

@@ -4,9 +4,7 @@
   "version": "${version}",
   "name": "Fabatik",
   "description": "A dynamic texture resolution mod and API.",
-  "authors": [
-    "The Lazurite Team"
-  ],
+  "authors": [ "The Lazurite Team" ],
   "contact": {
     "homepage": "https://lazurite.dev",
     "sources": "https://github.com/LazuriteMC/Fabatik",
@@ -16,16 +14,13 @@
   "icon": "assets/fabatik/icon.png",
   "environment": "client",
   "entrypoints": {
-    "client": [
-      "lazurite.fabatik.FabatikClient"
-    ]
+    "client": [ "dev.lazurite.fabatik.FabatikClient" ]
   },
-  "mixins": [
-    "fabatik.mixins.json"
-  ],
+  "mixins": [ "fabatik.mixins.json" ],
   "depends": {
     "fabricloader": "*",
     "fabric": "*",
-    "minecraft": "1.16.x"
+    "minecraft": "1.17.x",
+    "java": ">=16"
   }
 }
