@@ -1,99 +1,65 @@
 plugins {
-    id 'fabric-loom' version '0.9-SNAPSHOT'
+    id 'fabric-loom' version "$loom_version"
     id 'maven-publish'
-    id 'java-library'
 }
 
-sourceCompatibility = JavaVersion.VERSION_16
-targetCompatibility = JavaVersion.VERSION_16
-
-group = project.maven_group
-archivesBaseName = project.archives_base_name
-version = project.mod_version
+group 'dev.lazurite'
+version fabatik_version
 
 dependencies {
-    minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    mappings loom.officialMojangMappings()
+    minecraft "com.mojang:minecraft:$minecraft_version"
+    modImplementation "net.fabricmc:fabric-loader:$fabric_loader_version"
 
     api "org.apache.xmlgraphics:batik-all:${project.batik_version}"
     include "org.apache.xmlgraphics:batik-all:${project.batik_version}"
 }
 
-processResources {
-    inputs.property "version", project.version
-
-    filesMatching("fabric.mod.json") {
-        expand "version": project.version
-    }
-}
-
-compileJava {
-    options.encoding = "UTF-8"
-}
-
 java {
+    toolchain.languageVersion = JavaLanguageVersion.of min_java_version
     withSourcesJar()
 }
 
 jar {
-    from "LICENSE"
+    from 'LICENSE'
 }
 
-sourcesJar {
-    from sourceSets.main.allSource
-}
+tasks.withType(ProcessResources) {
+    inputs.properties(
+            'version': project.version,
 
-remapJar { }
+            'min_java_version': min_java_version,
+            'min_minecraft_version': min_minecraft_version,
+            'min_fabric_loader_version': min_fabric_loader_version
+    )
+
+    filesMatching 'fabric.mod.json', {
+        expand(
+                'version': project.version,
+
+                'min_java_version': min_java_version,
+                'min_minecraft_version': min_minecraft_version,
+                'min_fabric_loader_version': min_fabric_loader_version
+        )
+    }
+}
 
 publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            artifactId = 'fabatik'
+    repositories {
+        maven {
+            name 'Lazurite'
+            url 'https://lazurite.dev/releases'
 
-            pom {
-                name = 'Fabatik'
-                description = "A dynamic texture resolution mod and API."
-                url = 'https://github.com/LazuriteMC/Fabatik'
-                developers {
-                    developer {
-                        id = 'innatebit'
-                        name = 'InnateBit'
-                        email = 'patrickhofmanndesigns@gmail.com'
-                    }
-                }
-            }
-
-            versionMapping {
-                usage('java-api') {
-                    fromResolutionOf('runtimeClasspath')
-                }
-                usage('java-runtime') {
-                    fromResolutionResult()
-                }
-            }
-
-            artifact(remapJar) {
-                builtBy remapJar
-            }
-
-            artifact(sourcesJar) {
-                builtBy remapSourcesJar
+            credentials {
+                username property('publish.lazurite.alias')
+                password property('publish.lazurite.secret')
             }
         }
     }
 
-    repositories {
-        mavenLocal()
-
-        maven {
-            url = 'https://lazurite.dev/maven/releases'
-            credentials {
-                username = project.property("publish.lazurite.alias")
-                password = project.property("publish.lazurite.secret")
-            }
+    publications {
+        fabatik MavenPublication, {
+            from components.java
         }
     }
 }
